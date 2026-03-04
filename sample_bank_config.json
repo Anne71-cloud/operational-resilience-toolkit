@@ -1,0 +1,44 @@
+{
+  "bank_name": "Example Private Bank AG",
+  "jurisdiction": "Switzerland",
+  "regulatory_framework": "FINMA",
+  "critical_functions": [
+    {"name": "Payments Processing", "tier": 1, "owner": "Head of Operations", "max_acceptable_downtime_hours": 4, "revenue_at_risk": 2500000, "customers_impacted": 45000},
+    {"name": "Client Portfolio Management", "tier": 1, "owner": "Head of Wealth Management", "max_acceptable_downtime_hours": 8, "revenue_at_risk": 5000000, "customers_impacted": 12000},
+    {"name": "Client Onboarding & KYC", "tier": 2, "owner": "Head of Compliance", "max_acceptable_downtime_hours": 24, "revenue_at_risk": 500000, "customers_impacted": 500},
+    {"name": "Regulatory Reporting", "tier": 2, "owner": "Head of Finance", "max_acceptable_downtime_hours": 48, "revenue_at_risk": 0, "customers_impacted": 0},
+    {"name": "Client Digital Channels", "tier": 1, "owner": "Head of Digital", "max_acceptable_downtime_hours": 2, "revenue_at_risk": 1000000, "customers_impacted": 60000}
+  ],
+  "dependencies": [
+    {"function": "Payments Processing", "name": "SWIFT Gateway", "type": "technology", "criticality": "critical"},
+    {"function": "Payments Processing", "name": "Core Banking System", "type": "technology", "criticality": "critical"},
+    {"function": "Payments Processing", "name": "SIC Payment Network", "type": "infrastructure", "criticality": "critical"},
+    {"function": "Payments Processing", "name": "Cloud Provider A", "type": "third_party", "criticality": "high"},
+    {"function": "Client Portfolio Management", "name": "Core Banking System", "type": "technology", "criticality": "critical"},
+    {"function": "Client Portfolio Management", "name": "Order Management System", "type": "technology", "criticality": "critical"},
+    {"function": "Client Portfolio Management", "name": "Market Data Provider", "type": "third_party", "criticality": "critical"},
+    {"function": "Client Portfolio Management", "name": "Cloud Provider A", "type": "third_party", "criticality": "high"},
+    {"function": "Client Onboarding & KYC", "name": "Core Banking System", "type": "technology", "criticality": "high"},
+    {"function": "Client Onboarding & KYC", "name": "KYC Screening Platform", "type": "third_party", "criticality": "critical"},
+    {"function": "Regulatory Reporting", "name": "Core Banking System", "type": "technology", "criticality": "critical"},
+    {"function": "Regulatory Reporting", "name": "Data Warehouse", "type": "technology", "criticality": "high"},
+    {"function": "Regulatory Reporting", "name": "Cloud Provider A", "type": "third_party", "criticality": "high"},
+    {"function": "Client Digital Channels", "name": "E-Banking Platform", "type": "technology", "criticality": "critical"},
+    {"function": "Client Digital Channels", "name": "Cloud Provider A", "type": "third_party", "criticality": "critical"},
+    {"function": "Client Digital Channels", "name": "Core Banking System", "type": "technology", "criticality": "critical"}
+  ],
+  "sub_dependencies": [
+    {"parent": "Core Banking System", "child": "Primary Database", "type": "technology"},
+    {"parent": "Core Banking System", "child": "Cloud Provider A", "type": "third_party"},
+    {"parent": "E-Banking Platform", "child": "Core Banking System", "type": "technology"},
+    {"parent": "E-Banking Platform", "child": "Authentication Service", "type": "technology"},
+    {"parent": "SWIFT Gateway", "child": "HSM Security Module", "type": "infrastructure"}
+  ],
+  "impact_tolerances": [
+    {"function": "Payments Processing", "max_disruption_hours": 4, "rto_hours": 2, "rpo_hours": 0, "financial_impact_limit": 5000000, "customer_impact": "critical", "regulatory_reporting": true},
+    {"function": "Client Portfolio Management", "max_disruption_hours": 8, "rto_hours": 4, "rpo_hours": 1, "financial_impact_limit": 10000000, "customer_impact": "high", "regulatory_reporting": true},
+    {"function": "Client Onboarding & KYC", "max_disruption_hours": 24, "rto_hours": 12, "rpo_hours": 4, "financial_impact_limit": 1000000, "customer_impact": "medium", "regulatory_reporting": false},
+    {"function": "Regulatory Reporting", "max_disruption_hours": 48, "rto_hours": 24, "rpo_hours": 4, "financial_impact_limit": 0, "customer_impact": "low", "regulatory_reporting": true},
+    {"function": "Client Digital Channels", "max_disruption_hours": 2, "rto_hours": 1, "rpo_hours": 0, "financial_impact_limit": 2000000, "customer_impact": "critical", "regulatory_reporting": true}
+  ]
+}
